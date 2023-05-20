@@ -44,8 +44,6 @@ function App() {
         <Route path="/Movies" element={<Home movies={movie} />} />
         <Route path="/users/login" element={<Login />} />
         <Route path="/users/signup" element={<Register />} />
-        {/* //A MovieInfo LE VA A LLEGAR UN ID COMO PARAMETRO
-        //PARA QUE ACCEDA A ESE ID SE DEBE USAR USE PARAMS */}
         <Route path="/movieinfo/:id" element={<MovieInfo />} />
         <Route path="/showinfo/:id" element={<TvShowsInfo />} />
         <Route path="/favorites" element={<Favs />} />
