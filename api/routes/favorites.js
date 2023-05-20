@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const {
-  show_all_favorites,
+  show_user_favorites,
   add_favorite,
   remove_from_favorite,
 } = require("../controllers/favorites_controllers");
 
-router.get("/", show_all_favorites);
+router.get("/:user_name", show_user_favorites);
 
 router.post("/add", add_favorite);
 

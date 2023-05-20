@@ -7,9 +7,10 @@ const {
   showUserFavorites,
 } = require("../services/favoriteService");
 
-exports.show_all_favorites = asyncHandler(async (req, res, next) => {
+exports.show_user_favorites = asyncHandler(async (req, res, next) => {
   try {
-    let userFavorites = await showUserFavorites();
+    const { user_name } = req.params;
+    let userFavorites = await showUserFavorites(user_name);
     res.status(200).send(userFavorites);
   } catch (error) {
     throw Error(error);

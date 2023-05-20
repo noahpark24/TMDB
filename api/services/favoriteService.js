@@ -1,4 +1,5 @@
 const Favorites = require("../models/Favs");
+const { searchUser } = require("./userService");
 
 exports.createNewFav = async (movieData) => {
   try {
@@ -21,9 +22,12 @@ exports.deleteFav = async (favoriteToDelete) => {
   }
 };
 
-exports.showUserFavorites = async () => {
+exports.showUserFavorites = async (user_name) => {
   try {
-    let favorites = await Favorites.findAll();
+    let foundedUser = await searchUser(user_name);
+    let favorites = await Favorites.findAll({
+      where: { userId: foundedUser.id },
+    });
     return favorites;
   } catch (error) {
     throw Error(error);

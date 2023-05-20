@@ -17,8 +17,8 @@ class Users extends S.Model {
 
 Users.init(
   {
-    user_name: { type: S.STRING, require: true },
-    email: { type: S.STRING, require: true },
+    user_name: { type: S.STRING, require: true, unique: true },
+    email: { type: S.STRING, require: true, validate: { isEmail: true } },
     password: { type: S.STRING, require: true },
     salt: { type: S.STRING },
   },

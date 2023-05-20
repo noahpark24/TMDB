@@ -9,7 +9,7 @@ const NavBar = () => {
 
   const handleLogOut = () => {
     axios
-      .post("http://localhost:3000/api/users/logout")
+      .post("/api/users/logout")
       .then((result) => result.data)
       .then((result) => {
         user.logoutUser(result);

@@ -32,7 +32,7 @@ const MovieInfo = () => {
     };
 
     axios
-      .post("http://localhost:3000/api/favorites/add", newMovie)
+      .post("/api/favorites/add", newMovie)
       .then((result) => {
         favs.addFavorite(result.data);
       })
@@ -56,18 +56,26 @@ const MovieInfo = () => {
     <div>
       <h1>{original_title}</h1> <h4>{release_date}</h4>
       <img src={w500Image(poster_path)} alt="movie_image"></img>
-      <button onClick={handleFavorite}>Add To Favs</button>
+      {user.isAuthenticated ? (
+        <button onClick={handleFavorite}>Add To Favs</button>
+      ) : (
+        ""
+      )}
       <h4>{tagline}</h4>
       <h4>
         Genres :
         {genres?.map((data) => {
-          return " " + data.name + " " + ",";
+          return `     ${data.name} ,`;
         })}
       </h4>
-      <h3>
-        Summary :{<br></br>}
-        {overview}
-      </h3>
+      {overview ? (
+        <h3>
+          Summary :{<br></br>}
+          {overview}
+        </h3>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

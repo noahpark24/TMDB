@@ -1,7 +1,10 @@
+require("dotenv").config();
 const S = require("sequelize");
+const db_name = process.env.DB_NAME;
+const db_host = process.env.HOST;
 
-const db = new S("TMDB", null, null, {
-  host: `localhost`,
+const db = new S(db_name, null, null, {
+  host: db_host,
   dialect: `postgres`,
   logging: false,
 });

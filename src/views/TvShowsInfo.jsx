@@ -25,12 +25,12 @@ const TvShowsInfo = () => {
     const newShow = {
       movie_name: showDetails.name,
       movie_id: showDetails.id,
-      email: user.email,
+      user_name: user.user_name,
       poster_path: showDetails.poster_path,
     };
 
     axios
-      .post("http://localhost:3000/api/favorites/add", newShow)
+      .post("/api/favorites/add", newShow)
       .then((result) => {
         favs.addFavorite(result.data);
       })
@@ -58,18 +58,26 @@ const TvShowsInfo = () => {
         Last Episode in : {last_air_date}
       </h4>
       <img src={w500Image(poster_path)} alt="TVshow_image"></img>
-      <button onClick={handleFavorite}>Add To Favs</button>
+      {user.isAuthenticated ? (
+        <button onClick={handleFavorite}>Add To Favs</button>
+      ) : (
+        ""
+      )}
       <h4>{tagline}</h4>
       <h4>
         Genres :
         {genres?.map((data) => {
-          return " " + data.name + " " + ",";
+          return `     ${data.name} ,`;
         })}
       </h4>
-      <h3>
-        Summary :{<br></br>}
-        {overview}
-      </h3>
+      {overview ? (
+        <h3>
+          Summary :{<br></br>}
+          {overview}
+        </h3>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

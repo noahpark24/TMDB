@@ -16,7 +16,7 @@ const SignUp = () => {
       user_name: user_name.value,
     };
     axios
-      .post("http://localhost:3000/api/users/signup", createdUser)
+      .post("/api/users/signup", createdUser)
       .then(navigate("/"))
       .catch((err) => console.log("YOU BROKE THIS =>", err));
   };

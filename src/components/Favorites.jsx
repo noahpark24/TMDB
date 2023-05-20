@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useContext, useEffect, useState } from "react";
 import { FavoritesContext } from "../contexts/FavoritesContext";
+import { LogContext } from "../contexts/LogContext";
 import apiConfig from "../apiConfig";
 
 const Favs = () => {
@@ -11,10 +12,11 @@ const Favs = () => {
   const { w500Image } = apiConfig;
   const navigate = useNavigate();
   const favorites = useContext(FavoritesContext);
+  const userData = useContext(LogContext);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/favorites")
+      .get(`/api/favorites/${userData.user_name}`)
       .then((res) => res.data)
       .then((favsInfo) => setFavoriteMovies(favsInfo));
   }, []);
@@ -28,9 +30,7 @@ const Favs = () => {
           <button
             onClick={() =>
               axios
-                .delete(
-                  `http://localhost:3000/api/favorites/remove/${movie.movie_name}`
-                )
+                .delete(`/api/favorites/remove/${movie.movie_name}`)
                 .then((res) => favorites.deleteFavorite(res.data))
                 .then(() => {
                   alert("the movie has been removed succesfuly");
