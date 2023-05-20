@@ -1,19 +1,18 @@
-import { useContext, useState } from "react";
-import { LogContext } from "../contexts/LogContext";
 import apiConfig from "../apiConfig";
 import useInput from "../hooks/useInput";
 import axios from "axios";
 import Populars from "../views/Populars";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const Home = ({ movies }) => {
   const [searched, setSearched] = useState([]);
-
-  const user = useContext(LogContext);
-
-  const { baseUrl, apiKey, w500Image } = apiConfig;
   const search = useInput();
   const navigate = useNavigate();
+  const { baseUrl, apiKey, w500Image } = apiConfig;
+
+  const user = useSelector((state) => state.user);
 
   const handleSearch = (e) => {
     e.preventDefault();

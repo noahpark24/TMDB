@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import apiConfig from "../apiConfig";
 import { useNavigate, useParams } from "react-router-dom";
-import { LogContext } from "../contexts/LogContext";
-import { FavoritesContext } from "../contexts/FavoritesContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setFavorite } from "../state/favorite";
 
 const TvShowsInfo = () => {
-  const user = useContext(LogContext);
-  const favs = useContext(FavoritesContext);
-  const { baseUrl, apiKey, w500Image } = apiConfig;
   const [showDetails, setShowDetails] = useState([]);
+  const user = useSelector((state) => state.user);
+  const { baseUrl, apiKey, w500Image } = apiConfig;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   let { id } = useParams();
   useEffect(() => {
@@ -32,7 +32,7 @@ const TvShowsInfo = () => {
     axios
       .post("/api/favorites/add", newShow)
       .then((result) => {
-        favs.addFavorite(result.data);
+        dispatch(setFavorite(result.data));
       })
       .then(() => {
         alert("Tv show added to Favs list");
@@ -58,11 +58,7 @@ const TvShowsInfo = () => {
         Last Episode in : {last_air_date}
       </h4>
       <img src={w500Image(poster_path)} alt="TVshow_image"></img>
-      {user.isAuthenticated ? (
-        <button onClick={handleFavorite}>Add To Favs</button>
-      ) : (
-        ""
-      )}
+      {user.email ? <button onClick={handleFavorite}>Add To Favs</button> : ""}
       <h4>{tagline}</h4>
       <h4>
         Genres :

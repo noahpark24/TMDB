@@ -17,7 +17,7 @@ const SignUp = () => {
     };
     axios
       .post("/api/users/signup", createdUser)
-      .then(navigate("/"))
+      .then(() => navigate("/login"))
       .catch((err) => console.log("YOU BROKE THIS =>", err));
   };
 

@@ -2,18 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import apiConfig from "../apiConfig";
 import { useNavigate, useParams } from "react-router-dom";
-import { FavoritesContext } from "../contexts/FavoritesContext";
-import { LogContext } from "../contexts/LogContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setFavorite } from "../state/favorite";
 
 const MovieInfo = () => {
   const [movieDetails, setMovieDetails] = useState([]);
-
   const { baseUrl, apiKey, w500Image } = apiConfig;
   let { id } = useParams();
 
-  const favs = useContext(FavoritesContext);
-  const user = useContext(LogContext);
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
@@ -34,7 +33,7 @@ const MovieInfo = () => {
     axios
       .post("/api/favorites/add", newMovie)
       .then((result) => {
-        favs.addFavorite(result.data);
+        dispatch(setFavorite(result.data));
       })
       .then(() => {
         alert("movie added to Favs list");
@@ -43,24 +42,14 @@ const MovieInfo = () => {
       .catch((err) => console.log(err));
   };
 
-  const {
-    original_title,
-    poster_path,
-    overview,
-    genres,
-    release_date,
-    tagline,
-  } = movieDetails;
+  const { title, poster_path, overview, genres, release_date, tagline } =
+    movieDetails;
 
   return (
     <div>
-      <h1>{original_title}</h1> <h4>{release_date}</h4>
+      <h1>{title}</h1> <h4>{release_date}</h4>
       <img src={w500Image(poster_path)} alt="movie_image"></img>
-      {user.isAuthenticated ? (
-        <button onClick={handleFavorite}>Add To Favs</button>
-      ) : (
-        ""
-      )}
+      {user.email ? <button onClick={handleFavorite}>Add To Favs</button> : ""}
       <h4>{tagline}</h4>
       <h4>
         Genres :

@@ -1,8 +1,8 @@
+import "./App.css";
 import axios from "axios";
 import { Route, Routes } from "react-router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import apiConfig from "./apiConfig";
-import "./App.css";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -11,15 +11,15 @@ import MovieInfo from "./views/MovieInfo";
 import Favs from "./components/Favorites";
 import Tvdiscover from "./components/TvDiscover";
 import TvShowsInfo from "./views/TvShowsInfo";
-import { LogContext } from "./contexts/LogContext";
+import { useDispatch } from "react-redux";
+import { setUser } from "./state/user";
 
 function App() {
   const [movie, setMovie] = useState([]);
   const [tvDiscover, setTvDiscover] = useState([]);
-  const user = useContext(LogContext);
+  const dispatch = useDispatch();
   const { baseUrl, apiKey } = apiConfig;
 
-  // effect para traer las peliculas mas populares
   useEffect(() => {
     axios
       .get(` ${baseUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1`)
@@ -31,9 +31,9 @@ function App() {
       )
       .then((res) => res.data)
       .then((data) => setTvDiscover(data.results));
-    //persistencia
+
     axios.get("/api/users/me").then((res) => {
-      user.loginUser(res.data);
+      dispatch(setUser(res.data));
     });
   }, []);
   return (

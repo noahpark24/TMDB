@@ -1,19 +1,17 @@
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { LogContext } from "../contexts/LogContext";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../state/user";
 
 const NavBar = () => {
-  const user = useContext(LogContext);
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogOut = () => {
     axios
       .post("/api/users/logout")
-      .then((result) => result.data)
-      .then((result) => {
-        user.logoutUser(result);
-      })
+      .then((result) => dispatch(setUser(result.data)))
       .then(navigate("/"))
       .catch((err) => console.log(err));
   };

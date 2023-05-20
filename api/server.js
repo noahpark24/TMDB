@@ -13,7 +13,6 @@ server.use(cookieParser());
 server.use(express.json());
 server.use("/api", router);
 server.use(cors());
-console.log("acaa=>", process.env.SECRET);
 db.sync({ force: false }).then(() => {
   console.log("ESCUCHANDO A LA DB");
   server.listen(PORT, () => {

@@ -1,30 +1,29 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
 import useInput from "../hooks/useInput";
 import axios from "axios";
-import { useContext } from "react";
-import { LogContext } from "../contexts/LogContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../state/user";
 
 const Login = () => {
-  const navigate = useNavigate();
   const password = useInput();
   const user_name = useInput();
-
-  const user = useContext(LogContext);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
     const createdUser = {
       user_name: user_name.value,
       password: password.value,
+      isAutenticated: true,
     };
     axios
       .post("/api/users/login", createdUser)
-      .then((result) => result.data)
       .then((result) => {
-        user.loginUser(result);
+        dispatch(setUser(result.data));
+        navigate("/");
       })
-      .then(navigate("/"))
       .catch((err) => console.log(err));
   };
 

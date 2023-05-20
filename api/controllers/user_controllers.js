@@ -3,7 +3,7 @@ const {
   searchUser,
   createUser,
   validateUserPassword,
-  generateUserPayloadAndCookie,
+  generateUserCookie,
 } = require("../services/userService");
 
 exports.create_new_user = asyncHandler(async (req, res, next) => {
@@ -29,11 +29,16 @@ exports.login_user = asyncHandler(async (req, res, next) => {
 
     let validatedUser = await validateUserPassword(user);
 
-    let userCookie = await generateUserPayloadAndCookie(validatedUser);
+    const payload = {
+      email: validatedUser.email,
+      user_name: validatedUser.user_name,
+    };
 
-    res.cookie("token", userCookie.cookie);
+    let userCookie = await generateUserCookie(payload);
 
-    res.status(200).send(userCookie.payload);
+    res.cookie("token", userCookie);
+
+    res.status(200).send(payload);
   } catch (error) {
     next(error);
   }

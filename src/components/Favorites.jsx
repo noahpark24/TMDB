@@ -1,18 +1,17 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-import { useContext, useEffect, useState } from "react";
-import { FavoritesContext } from "../contexts/FavoritesContext";
-import { LogContext } from "../contexts/LogContext";
 import apiConfig from "../apiConfig";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setFavorite } from "../state/favorite";
 
 const Favs = () => {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
 
+  const userData = useSelector((state) => state.user);
   const { w500Image } = apiConfig;
   const navigate = useNavigate();
-  const favorites = useContext(FavoritesContext);
-  const userData = useContext(LogContext);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
@@ -31,7 +30,7 @@ const Favs = () => {
             onClick={() =>
               axios
                 .delete(`/api/favorites/remove/${movie.movie_name}`)
-                .then((res) => favorites.deleteFavorite(res.data))
+                .then((res) => dispatch(setFavorite(res.data)))
                 .then(() => {
                   alert("the movie has been removed succesfuly");
                   navigate("/movies");

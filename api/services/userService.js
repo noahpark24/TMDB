@@ -23,10 +23,6 @@ exports.validateUserPassword = async (user) => {
   try {
     let validatedUser = user.validatePassword(user.password);
     if (validatedUser) {
-      // const payload = {
-      //   email: user.email,
-      //   user_name: user.user_name,
-      // };
       return user;
     }
   } catch (error) {
@@ -34,14 +30,10 @@ exports.validateUserPassword = async (user) => {
   }
 };
 
-exports.generateUserPayloadAndCookie = async (validatedUser) => {
+exports.generateUserCookie = async (payload) => {
   try {
-    const payload = {
-      email: validatedUser.email,
-      user_name: validatedUser.user_name,
-    };
     let cookie = generateToken(payload);
-    return { payload, cookie };
+    return cookie;
   } catch (error) {
     throw Error(error);
   }
