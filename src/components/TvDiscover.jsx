@@ -11,18 +11,17 @@ const Tvdiscover = ({ element }) => {
   const search = useInput();
   const navigate = useNavigate();
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    let query = search.value.replace(" ", "%20");
-    axios
-      .get(
+  const handleSearch = async (e) => {
+    try {
+      e.preventDefault();
+      let query = search.value.replace(" ", "%20");
+      let searcheShow = await axios.get(
         `${baseUrl}/search/tv?api_key=${apiKey}&language=en-US&page=1&query=${query}&include_adult=false`
-      )
-      .then((res) => res.data)
-      .then((shows) => {
-        setSearched(shows.results);
-      })
-      .catch(() => alert(" No TvShow Found with that name"));
+      );
+      setSearched(searcheShow.data.results);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>

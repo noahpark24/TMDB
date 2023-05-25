@@ -8,25 +8,29 @@ const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogOut = () => {
-    axios
-      .post("/api/users/logout")
-      .then((result) => dispatch(setUser(result.data)))
-      .then(navigate("/"))
-      .catch((err) => console.log(err));
+  const handleLogOut = async () => {
+    try {
+      let logoutUser = await axios.post("/api/users/logout");
+      dispatch(setUser(logoutUser.data));
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <nav>
       {user.email ? (
-        <Link to="/favorites">
-          <button>Favorites</button>
-        </Link>
+        <>
+          <Link to="/favorites">
+            <button>Favorites</button>
+          </Link>
+          <button onClick={handleLogOut}>Logout</button>
+        </>
       ) : (
         <Link to="/users/login">
           <button>Login</button>
         </Link>
       )}
-      {user.email ? <button onClick={handleLogOut}>Logout</button> : ""}
 
       <Link to="/Movies">
         <button>Movies</button>

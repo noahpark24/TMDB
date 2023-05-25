@@ -4,6 +4,7 @@ import apiConfig from "../apiConfig";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFavorite } from "../state/favorite";
+import { AddToFavoriteMessage } from "../commons/alerts";
 
 const MovieInfo = () => {
   const [movieDetails, setMovieDetails] = useState([]);
@@ -14,32 +15,33 @@ const MovieInfo = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    axios
-      .get(`${baseUrl}/movie/${id}?api_key=${apiKey}&language=en-US`)
-      .then((res) => res.data)
-      .then((data) => setMovieDetails(data));
+  useEffect(async () => {
+    try {
+      let movieDetails = await axios.get(
+        `${baseUrl}/movie/${id}?api_key=${apiKey}&language=en-US`
+      );
+      setMovieDetails(movieDetails.data);
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
-  const handleFavorite = (e) => {
-    e.preventDefault();
-    const newMovie = {
-      movie_name: movieDetails.title,
-      movie_id: movieDetails.id,
-      user_name: user.user_name,
-      poster_path: movieDetails.poster_path,
-    };
-
-    axios
-      .post("/api/favorites/add", newMovie)
-      .then((result) => {
-        dispatch(setFavorite(result.data));
-      })
-      .then(() => {
-        alert("movie added to Favs list");
-        navigate("/movies");
-      })
-      .catch((err) => console.log(err));
+  const handleFavorite = async (e) => {
+    try {
+      e.preventDefault();
+      const newMovie = {
+        movie_name: movieDetails.title,
+        movie_id: movieDetails.id,
+        user_name: user.user_name,
+        poster_path: movieDetails.poster_path,
+      };
+      let addFavorite = await axios.post("/api/favorites/add", newMovie);
+      if (addFavorite.data.userId) dispatch(setFavorite(addFavorite.data));
+      navigate("/movies");
+      AddToFavoriteMessage();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const { title, poster_path, overview, genres, release_date, tagline } =

@@ -33,3 +33,14 @@ exports.showUserFavorites = async (user_name) => {
     throw Error(error);
   }
 };
+
+exports.searchFavorite = async (movie_name) => {
+  try {
+    let searchedFavorite = await Favorites.findAll({
+      where: { movie_name: movie_name },
+    });
+    return searchedFavorite;
+  } catch (error) {
+    throw Error(error);
+  }
+};

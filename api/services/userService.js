@@ -15,18 +15,7 @@ exports.createUser = async (userData) => {
     let newUser = await Users.create(userData);
     return newUser;
   } catch (error) {
-    throw Error(error);
-  }
-};
-
-exports.validateUserPassword = async (user) => {
-  try {
-    let validatedUser = user.validatePassword(user.password);
-    if (validatedUser) {
-      return user;
-    }
-  } catch (error) {
-    throw Error(error);
+    throw Error("this username dont exist");
   }
 };
 
@@ -34,6 +23,15 @@ exports.generateUserCookie = async (payload) => {
   try {
     let cookie = generateToken(payload);
     return cookie;
+  } catch (error) {
+    throw Error(error);
+  }
+};
+
+exports.getAllUsers = async () => {
+  try {
+    let signedInUsers = await Users.findAll();
+    return signedInUsers;
   } catch (error) {
     throw Error(error);
   }

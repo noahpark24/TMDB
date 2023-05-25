@@ -2,8 +2,8 @@ const asyncHandler = require("express-async-handler");
 const {
   searchUser,
   createUser,
-  validateUserPassword,
   generateUserCookie,
+  getAllUsers,
 } = require("../services/userService");
 
 exports.create_new_user = asyncHandler(async (req, res, next) => {
@@ -24,27 +24,36 @@ exports.create_new_user = asyncHandler(async (req, res, next) => {
 
 exports.login_user = asyncHandler(async (req, res, next) => {
   try {
-    let { user_name } = req.body;
+    let { user_name, password } = req.body;
     let user = await searchUser(user_name);
 
-    let validatedUser = await validateUserPassword(user);
+    let validatedPassword = await user.validatePassword(password);
 
-    const payload = {
-      email: validatedUser.email,
-      user_name: validatedUser.user_name,
-    };
+    if (validatedPassword) {
+      const payload = {
+        email: user.email,
+        user_name: user.user_name,
+      };
 
-    let userCookie = await generateUserCookie(payload);
+      let userCookie = await generateUserCookie(payload);
 
-    res.cookie("token", userCookie);
+      res.cookie("token", userCookie);
 
-    res.status(200).send(payload);
+      res.status(200).send(payload);
+    } else {
+      res.send("wrong password or user_name");
+    }
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 });
 
 exports.logout_user = asyncHandler(async (req, res) => {
   res.clearCookie("token");
   res.sendStatus(204);
+});
+
+exports.get_all_users = asyncHandler(async (req, res) => {
+  let signedInUsers = await getAllUsers();
+  res.status(200).send(signedInUsers);
 });

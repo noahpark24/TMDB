@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../state/user";
+import { FailedLogin } from "../commons/alerts";
 
 const Login = () => {
   const password = useInput();
@@ -11,20 +12,23 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const createdUser = {
-      user_name: user_name.value,
-      password: password.value,
-      isAutenticated: true,
-    };
-    axios
-      .post("/api/users/login", createdUser)
-      .then((result) => {
-        dispatch(setUser(result.data));
-        navigate("/");
-      })
-      .catch((err) => console.log(err));
+  const onSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const createdUser = {
+        user_name: user_name.value,
+        password: password.value,
+      };
+      let logedUser = await axios.post("/api/users/login", createdUser);
+      if (logedUser.data.email) {
+        dispatch(setUser(logedUser.data));
+        navigate("/Movies");
+      } else {
+        FailedLogin();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

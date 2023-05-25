@@ -1,24 +1,49 @@
 import axios from "axios";
 import useInput from "../hooks/useInput";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { EmailError, SignedInMessage } from "../commons/alerts";
+import { useEffect } from "react";
+import { setUserList } from "../state/usersList";
 
 const SignUp = () => {
   const email = useInput();
   const user_name = useInput();
   const password = useInput();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userList = useSelector((state) => state.userList);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const createdUser = {
-      email: email.value,
-      password: password.value,
-      user_name: user_name.value,
-    };
-    axios
-      .post("/api/users/signup", createdUser)
-      .then(() => navigate("/login"))
-      .catch((err) => console.log("YOU BROKE THIS =>", err));
+  // useEffect(async () => {
+  //   let signedInUsers = await axios.get("/api/users/get-all");
+  //   console.log("soy signed in user", signedInUsers.data);
+  //   dispatch(setUserList(signedInUsers.data));
+  // }, [dispatch]);
+
+  // const emailError = () => {
+  //   userList.map((data) => {
+  //     if (data.email === email) {
+  //       return EmailError();
+  //     }
+  //   });
+  // };
+
+  console.log("soy user list=>", userList);
+  const onSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const createdUser = {
+        email: email.value,
+        password: password.value,
+        user_name: user_name.value,
+      };
+
+      await axios.post("/api/users/signup", createdUser);
+      navigate("/users/login");
+      SignedInMessage();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

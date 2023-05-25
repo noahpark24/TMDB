@@ -14,18 +14,17 @@ const Home = ({ movies }) => {
 
   const user = useSelector((state) => state.user);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    let query = search.value.replace(" ", "%20");
-    axios
-      .get(
+  const handleSearch = async (e) => {
+    try {
+      e.preventDefault();
+      let query = search.value.replace(" ", "%20");
+      let searchedMovies = await axios.get(
         ` ${baseUrl}/search/movie?api_key=${apiKey}&query=${query}&page=1&include_adult=false`
-      )
-      .then((res) => res.data)
-      .then((movies) => {
-        setSearched(movies.results);
-      })
-      .catch(() => alert(" No Movies Found with that name"));
+      );
+      setSearched(searchedMovies.data.results);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
