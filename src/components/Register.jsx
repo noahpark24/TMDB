@@ -1,12 +1,19 @@
-import axios from "axios";
-import useInput from "../hooks/useInput";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { EmailError, SignedInMessage } from "../commons/alerts";
-import { useEffect } from "react";
-import { setUserList } from "../state/usersList";
+//Dependencies
+import React from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+//Hooks
+import useInput from '../hooks/useInput';
+//Config
+import apiConfig from '../apiConfig';
+//Commons
+import { EmailError, SignedInMessage } from '../commons/alerts';
+import { useEffect } from 'react';
+import { setUserList } from '../state/usersList';
 
 const SignUp = () => {
+  const { projectBaseUrl } = apiConfig;
   const email = useInput();
   const user_name = useInput();
   const password = useInput();
@@ -28,7 +35,6 @@ const SignUp = () => {
   //   });
   // };
 
-  console.log("soy user list=>", userList);
   const onSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -38,8 +44,10 @@ const SignUp = () => {
         user_name: user_name.value,
       };
 
-      await axios.post("/api/users/signup", createdUser);
-      navigate("/users/login");
+      await axios.post(`${projectBaseUrl}/users/signup`, createdUser, {
+        withCredentials: true,
+      });
+      navigate('/users/login');
       SignedInMessage();
     } catch (error) {
       console.log(error);

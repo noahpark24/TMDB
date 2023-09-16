@@ -1,6 +1,7 @@
-const Users = require("./User");
-const Favorites = require("./Favs");
+import Users from './User.js';
+import Favorites from './Favs.js';
 
-Favorites.belongsTo(Users, { as: "user" });
+Users.hasMany(Favorites, { as: 'favorite' });
+Favorites.belongsTo(Users, { as: 'user' });
 
-module.exports = { Users, Favorites };
+export { Users, Favorites };

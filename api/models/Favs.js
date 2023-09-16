@@ -1,5 +1,5 @@
-const S = require("sequelize");
-const db = require("../config/db/index");
+import S from 'sequelize';
+import db from '../config/db/index.js';
 
 class Favorites extends S.Model {}
 
@@ -11,7 +11,7 @@ Favorites.init(
   },
   {
     sequelize: db,
-    modelName: "favorites",
+    modelName: 'favorites',
   }
 );
-module.exports = Favorites;
+export default Favorites;

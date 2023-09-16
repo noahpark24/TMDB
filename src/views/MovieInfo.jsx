@@ -1,14 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import apiConfig from "../apiConfig";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setFavorite } from "../state/favorite";
-import { AddToFavoriteMessage } from "../commons/alerts";
+//Dependencies
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+//config
+import apiConfig from '../apiConfig';
+//Redux States
+import { setFavorite } from '../state/favorite';
+//Commons
+import { AddToFavoriteMessage } from '../commons/alerts';
 
 const MovieInfo = () => {
   const [movieDetails, setMovieDetails] = useState([]);
-  const { baseUrl, apiKey, w500Image } = apiConfig;
+  const { projectBaseUrl, baseUrl, apiKey, w500Image } = apiConfig;
   let { id } = useParams();
 
   const user = useSelector((state) => state.user);
@@ -35,9 +39,15 @@ const MovieInfo = () => {
         user_name: user.user_name,
         poster_path: movieDetails.poster_path,
       };
-      let addFavorite = await axios.post("/api/favorites/add", newMovie);
+      let addFavorite = await axios.post(
+        `${projectBaseUrl}/favorites/add`,
+        newMovie,
+        {
+          withCredentials: true,
+        }
+      );
       if (addFavorite.data.userId) dispatch(setFavorite(addFavorite.data));
-      navigate("/movies");
+      navigate('/Movies');
       AddToFavoriteMessage();
     } catch (error) {
       console.log(error);
@@ -51,7 +61,7 @@ const MovieInfo = () => {
     <div>
       <h1>{title}</h1> <h4>{release_date}</h4>
       <img src={w500Image(poster_path)} alt="movie_image"></img>
-      {user.email ? <button onClick={handleFavorite}>Add To Favs</button> : ""}
+      {user.email ? <button onClick={handleFavorite}>Add To Favs</button> : ''}
       <h4>{tagline}</h4>
       <h4>
         Genres :
@@ -65,7 +75,7 @@ const MovieInfo = () => {
           {overview}
         </h3>
       ) : (
-        ""
+        ''
       )}
     </div>
   );

@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import apiConfig from "../apiConfig";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setFavorite } from "../state/favorite";
+//Dependencies
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+//Redux States
+import { setFavorite } from '../state/favorite';
+//Config
+import apiConfig from '../apiConfig';
 
 const TvShowsInfo = () => {
   const [showDetails, setShowDetails] = useState([]);
   const user = useSelector((state) => state.user);
-  const { baseUrl, apiKey, w500Image } = apiConfig;
+  const { projectBaseUrl, baseUrl, apiKey, w500Image } = apiConfig;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -30,13 +33,15 @@ const TvShowsInfo = () => {
     };
 
     axios
-      .post("/api/favorites/add", newShow)
+      .post(`${projectBaseUrl}/favorites/add`, newShow, {
+        withCredentials: true,
+      })
       .then((result) => {
         dispatch(setFavorite(result.data));
       })
       .then(() => {
-        alert("Tv show added to Favs list");
-        navigate("/movies");
+        alert('Tv show added to Favs list');
+        navigate('/movies');
       })
       .catch((err) => console.log(err));
   };
@@ -58,7 +63,7 @@ const TvShowsInfo = () => {
         Last Episode in : {last_air_date}
       </h4>
       <img src={w500Image(poster_path)} alt="TVshow_image"></img>
-      {user.email ? <button onClick={handleFavorite}>Add To Favs</button> : ""}
+      {user.email ? <button onClick={handleFavorite}>Add To Favs</button> : ''}
       <h4>{tagline}</h4>
       <h4>
         Genres :
@@ -72,7 +77,7 @@ const TvShowsInfo = () => {
           {overview}
         </h3>
       ) : (
-        ""
+        ''
       )}
     </div>
   );
