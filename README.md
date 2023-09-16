@@ -27,21 +27,21 @@ durante este proyecto aprendi a conectarme a una api externa como lo es la de Th
 - Mantener sesión abierta ante un cierre del _browser_ o `refresh`.
 
 📓 **Prioridad Baja** (_Won't Have_)
-
 - _Full responsive_.
 - _Loguear_ usuarios a través de su cuenta en Google.
 
 ### Completados En El Plazo Establecido :
 
-- \_Must Have Completo
-- \_Should Have Completo
-- _Mantener sesión abierta ante un cierre del \_browser_ o `refresh`.
+- _Must Have Completo
+- _Should Have Completo
+- _Mantener sesión abierta ante un cierre del _browser_ o `refresh`.
 
-### Como Correr El Proyecto
-
+### Como Correr El Proyecto 
 - Instalar Postgresql En Su Computadora
 - Crear Archivo .env En La Raiz Del Proyecto Y Llenar Sus Datos Siguiendo El .env.example
-- Ejecutar El Comando createdb <DB*NAME_DEL*.ENV> En Su Terminal
+- Ejecutar El Comando createdb <DB_NAME_DEL_.ENV> En Su Terminal
 - Ubicarse En La Carpeta Del Proyecto Con La Terminal
 - Ejecutar npm run client Para Tener El Front Disponible
 - Ejecutar npm run server Para Tener El Servidor Disponible
+
+
