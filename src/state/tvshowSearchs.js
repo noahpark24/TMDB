@@ -1,11 +1,11 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 
-export const setUserList = createAction('SET_USER_LIST');
+export const setSearchedTvShows = createAction('SET_SEARCHE_Tv_Shows');
 
 const initialState = [];
 
 export default createReducer(initialState, (builder) => {
-  builder.addCase(setUserList, (state, action) => {
+  builder.addCase(setSearchedTvShows, (state, action) => {
     return action.payload;
   });
 });

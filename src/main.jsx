@@ -1,18 +1,21 @@
+import './index.css';
+import 'tailwindcss/tailwind.css';
+import App from './App.jsx';
 import React from 'react';
-import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './state/store';
-import './index.css';
-import App from './App.jsx';
+//React 18 render
+import { createRoot } from 'react-dom/client';
+const container = document.getElementById('root');
+const root = createRoot(container);
 
-render(
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );

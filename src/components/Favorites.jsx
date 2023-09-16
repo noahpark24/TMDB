@@ -1,38 +1,17 @@
 //Dependencies
 import React from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 //Config
 import apiConfig from '../apiConfig';
-//Redux States
-import { setFavorite } from '../state/favorite';
 //Commons
-import { DeleteFavoriteMessage } from '../commons/alerts';
+import FavoriteCards from '../views/FavoritesCards';
 
 const Favs = () => {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   const userData = useSelector((state) => state.user);
-  const { w500Image, projectBaseUrl } = apiConfig;
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleDelete = async (movieName) => {
-    try {
-      let deletedFavorite = await axios.delete(
-        `${projectBaseUrl}/favorites/remove/${movieName}`,
-        {
-          withCredentials: true,
-        }
-      );
-      dispatch(setFavorite(deletedFavorite.data));
-      navigate('/Movies');
-      DeleteFavoriteMessage();
-    } catch (error) {
-      console.log('error from handle delete', error);
-    }
-  };
+  const { projectBaseUrl } = apiConfig;
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -43,27 +22,26 @@ const Favs = () => {
             withCredentials: true,
           }
         );
+        console.log('fav data : ', favsInfo.data);
         setFavoriteMovies(favsInfo.data);
       } catch (error) {
         console.log(error);
       }
     };
-
+    console.log('soy favorite movie : ', favoriteMovies);
     fetchFavorites();
   }, []);
 
   return (
-    <>
-      {favoriteMovies.map((movie, index) => (
-        <div key={index}>
-          <h1>{movie.movie_name}</h1>
-          <img src={w500Image(movie.poster_path)} alt="movie_image"></img>
-          <button onClick={() => handleDelete(movie.movie_name)}>
-            Delete Favorite
-          </button>
-        </div>
-      ))}
-    </>
+    <div className="max-w-screen-lg p-12 mx-auto flex flex-col justify-center w-full h-full">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 px-12  sm:px-0 ">
+        {favoriteMovies.map((value) => (
+          <div>
+            <FavoriteCards key={value.id} {...value} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

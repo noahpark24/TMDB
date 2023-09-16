@@ -1,11 +1,11 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 
-export const setUserList = createAction('SET_USER_LIST');
+export const setSearchedMovies = createAction('SET_SEARCHED_MOVIES');
 
 const initialState = [];
 
 export default createReducer(initialState, (builder) => {
-  builder.addCase(setUserList, (state, action) => {
+  builder.addCase(setSearchedMovies, (state, action) => {
     return action.payload;
   });
 });

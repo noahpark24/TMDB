@@ -45,16 +45,44 @@ const Login = () => {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
-        <input placeholder="user name" {...user_name}></input>
-        <input type="password" placeholder="password" {...password}></input>
-        <button type="submit">logearse</button>
-        <Link to="/users/signup">
-          <button>Registrate aqui</button>
-        </Link>
+    <div className="flex justify-center items-center h-screen">
+      <form onSubmit={onSubmit} className="bg-gray-100 p-6 rounded shadow-lg">
+        <div className="mb-4">
+          <input
+            className="w-full p-2 border border-gray-300 rounded"
+            type="text"
+            placeholder="User Name"
+            {...user_name}
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            className="w-full p-2 border border-gray-300 rounded"
+            type="password"
+            placeholder="Password"
+            {...password}
+          />
+        </div>
+        <div className="mb-4">
+          <button
+            className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            type="submit"
+          >
+            Log In
+          </button>
+        </div>
+        <div>
+          <Link to="/users/signup">
+            <button
+              className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+              type="button"
+            >
+              Register Here
+            </button>
+          </Link>
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 
