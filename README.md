@@ -37,7 +37,7 @@ durante este proyecto aprendi a conectarme a una api externa como lo es la de Th
 - _Loguear_ usuarios a través de su cuenta en Google.
 
 ## Capturas Del Proyecto :
-<img src="./public/popular movies.png" alt="Captura de la página de inicio" width="400"> | <img src="./public/popular tv shows.png" alt="popular tv shows" width="400"> | <img src="./public/search tv show.png" alt="Captura de la página de búsqueda" width="400"> | <img src="./public/tv show details.png" alt="Captura de la página individual de tv show" width="400"> |
+<img src="./public/popular movies.png" alt="Captura de la página de inicio" width="400">|<img src="./public/popular tv shows.png" alt="popular tv shows" width="400">|<img src="./public/search tv show.png" alt="Captura de la página de búsqueda" width="400">|<img src="./public/tv show details.png" alt="Captura de la página individual de tv show" width="400">
 
 ## Completados En El Plazo Establecido :
 
