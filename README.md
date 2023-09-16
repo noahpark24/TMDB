@@ -1,10 +1,16 @@
-### TMDB
+## TMDB
 
 Este projecto fue realizado en el plazo de 1 semana durante mi capacitacion en Plataforma 5 Cooding Bootcamp
 
 durante este proyecto aprendi a conectarme a una api externa como lo es la de The Movie Database
 
-### Requisitos
+## Stack De Tecnologias Usadas
+
+● Back End: Node.js + Express + PostgreSql
+
+● Front End: React + Redux + Vite 
+
+## Requisitos
 
 📕 **Prioridad Alta** (_Must Have_)
 
@@ -30,13 +36,16 @@ durante este proyecto aprendi a conectarme a una api externa como lo es la de Th
 - _Full responsive_.
 - _Loguear_ usuarios a través de su cuenta en Google.
 
-### Completados En El Plazo Establecido :
+## Capturas Del Proyecto :
+<img src="./public/popular movies.png" alt="Captura de la página de inicio" width="400"> | <img src="./public/popular tv shows.png" alt="popular tv shows" width="400"> | <img src="./public/search tv show.png" alt="Captura de la página de búsqueda" width="400"> | <img src="./public/tv show details.png" alt="Captura de la página individual de tv show" width="400"> |
+
+## Completados En El Plazo Establecido :
 
 - _Must Have Completo
 - _Should Have Completo
 - _Mantener sesión abierta ante un cierre del _browser_ o `refresh`.
 
-### Como Correr El Proyecto 
+## Como Correr El Proyecto 
 - Instalar Postgresql En Su Computadora
 - Crear Archivo .env En La Raiz Del Proyecto Y Llenar Sus Datos Siguiendo El .env.example
 - Ejecutar El Comando createdb <DB_NAME_DEL_.ENV> En Su Terminal
