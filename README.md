@@ -1,4 +1,5 @@
 ### TMDB
+
 Este projecto fue realizado en el plazo de 1 semana durante mi capacitacion en Plataforma 5 Cooding Bootcamp
 
 durante este proyecto aprendi a conectarme a una api externa como lo es la de The Movie Database
@@ -30,6 +31,7 @@ durante este proyecto aprendi a conectarme a una api externa como lo es la de Th
 - _Loguear_ usuarios a través de su cuenta en Google.
 
 ### Completados En El Plazo Establecido :
+
 - _Must Have Completo
 - _Should Have Completo
 - _Mantener sesión abierta ante un cierre del _browser_ o `refresh`.
@@ -41,6 +43,5 @@ durante este proyecto aprendi a conectarme a una api externa como lo es la de Th
 - Ubicarse En La Carpeta Del Proyecto Con La Terminal
 - Ejecutar npm run client Para Tener El Front Disponible
 - Ejecutar npm run server Para Tener El Servidor Disponible
-
 
 

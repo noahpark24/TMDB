@@ -2,7 +2,7 @@ import React from 'react';
 //Config
 import apiConfig from '../apiConfig';
 
-const Populars = ({ title, poster_path, id }) => {
+const TvShowsCard = ({ name, poster_path, id }) => {
   const { w500Image } = apiConfig;
 
   return (
@@ -12,12 +12,12 @@ const Populars = ({ title, poster_path, id }) => {
           <img
             className="rounded-md hover:scale-75"
             src={w500Image(poster_path)}
-            alt={title}
+            alt={name}
           />
           {/* Hover Text */}
-          <a href={`/movieinfo/${id}`}>
+          <a href={`/showinfo/${id}`}>
             <div className="bg-black bg-opacity-50 text-white absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100">
-              <p>{title}</p>
+              <p>{name}</p>
             </div>
           </a>
         </div>
@@ -26,4 +26,4 @@ const Populars = ({ title, poster_path, id }) => {
   );
 };
 
-export default Populars;
+export default TvShowsCard;

@@ -1,13 +1,17 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createAction, createReducer } from '@reduxjs/toolkit';
 
-export const setFavorite = createAction("SET_FAVORITE");
+export const setFavorite = createAction('SET_FAVORITE');
 
 const initialState = {
-  movie_name: "",
-  movie_id: "",
-  poster_path: "",
+  movie_name: '',
+  movie_id: '',
+  is_tv_show: false,
+  poster_path: '',
 };
 
-export default createReducer(initialState, {
-  [setFavorite]: (state, action) => action.payload,
+//RTK 2.0 usa builders
+export default createReducer(initialState, (builder) => {
+  builder.addCase(setFavorite, (state, action) => {
+    return action.payload;
+  });
 });

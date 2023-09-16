@@ -1,68 +1,38 @@
-import { useState } from "react";
-import apiConfig from "../apiConfig";
-import { useNavigate } from "react-router-dom";
-import useInput from "../hooks/useInput";
-import axios from "axios";
+//Dependencies
+import React from 'react';
+import { useSelector } from 'react-redux';
+//Config
+import TvShowsCard from '../views/TvShowsCard';
 
 const Tvdiscover = ({ element }) => {
-  const [searched, setSearched] = useState([]);
-  const { baseUrl, apiKey, w500Image } = apiConfig;
+  const searched = useSelector((state) => state.tvshowSearchs);
 
-  const search = useInput();
-  const navigate = useNavigate();
-
-  const handleSearch = async (e) => {
-    try {
-      e.preventDefault();
-      let query = search.value.replace(" ", "%20");
-      let searcheShow = await axios.get(
-        `${baseUrl}/search/tv?api_key=${apiKey}&language=en-US&page=1&query=${query}&include_adult=false`
-      );
-      setSearched(searcheShow.data.results);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
-    <>
-      <form onSubmit={handleSearch}>
-        <input
-          {...search}
-          className="input my-3"
-          type="text"
-          placeholder="Search tv-show"
-        />
-      </form>
-      <button onClick={() => setSearched([])}>Home</button>
-
+    <div className="max-w-screen-lg p-12 mx-auto flex flex-col justify-center w-full h-full">
       <div>
         {searched.length > 0 ? (
           <>
-            {searched.map((data) => (
-              <div key={data.id}>
-                <h1>{data.name}</h1>
-                <img src={w500Image(data.poster_path)} alt="movie_image"></img>
-                <button onClick={() => navigate(`/showinfo/${data.id}`)}>
-                  view more
-                </button>
-              </div>
-            ))}
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 px-12  sm:px-0 ">
+              {searched.map((value) => (
+                <div>
+                  <TvShowsCard key={value.id} {...value} />
+                </div>
+              ))}
+            </div>
           </>
         ) : (
           <>
-            {element.map((data) => (
-              <div key={data.id}>
-                <h1>{data.name}</h1>
-                <img src={w500Image(data.poster_path)} alt="show_image"></img>
-                <button onClick={() => navigate(`/showinfo/${data.id}`)}>
-                  view more
-                </button>
-              </div>
-            ))}
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 px-12  sm:px-0 ">
+              {element.map((value) => (
+                <div>
+                  <TvShowsCard key={value.id} {...value} />
+                </div>
+              ))}
+            </div>
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

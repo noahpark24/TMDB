@@ -1,4 +1,4 @@
-const { validateToken } = require("./token");
+import { validateToken } from './token.js';
 
 function validateUser(req, res, next) {
   const token = req.cookies.token;
@@ -12,4 +12,4 @@ function validateUser(req, res, next) {
   next();
 }
 
-module.exports = { validateUser };
+export default validateUser;
