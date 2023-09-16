@@ -1,18 +1,22 @@
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../state/user";
+import axios from 'axios';
+import apiConfig from '../apiConfig';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../state/user';
 
 const NavBar = () => {
+  const { projectBaseUrl } = apiConfig;
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogOut = async () => {
     try {
-      let logoutUser = await axios.post("/api/users/logout");
-      dispatch(setUser(logoutUser.data));
-      navigate("/");
+      await axios.post(`${projectBaseUrl}/users/logout`, {
+        withCredentials: true,
+      });
+      dispatch(setUser({}));
+      navigate('/');
     } catch (error) {
       console.log(error);
     }

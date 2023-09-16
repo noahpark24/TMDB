@@ -1,10 +1,10 @@
-import apiConfig from "../apiConfig";
-import useInput from "../hooks/useInput";
-import axios from "axios";
-import Populars from "../views/Populars";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import apiConfig from '../apiConfig';
+import useInput from '../hooks/useInput';
+import axios from 'axios';
+import Populars from '../views/Populars';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const Home = ({ movies }) => {
   const [searched, setSearched] = useState([]);
@@ -17,7 +17,7 @@ const Home = ({ movies }) => {
   const handleSearch = async (e) => {
     try {
       e.preventDefault();
-      let query = search.value.replace(" ", "%20");
+      let query = search.value.replace(' ', '%20');
       let searchedMovies = await axios.get(
         ` ${baseUrl}/search/movie?api_key=${apiKey}&query=${query}&page=1&include_adult=false`
       );

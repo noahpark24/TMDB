@@ -1,8 +1,8 @@
-import { useState } from "react";
-import apiConfig from "../apiConfig";
-import { useNavigate } from "react-router-dom";
-import useInput from "../hooks/useInput";
-import axios from "axios";
+import { useState } from 'react';
+import apiConfig from '../apiConfig';
+import { useNavigate } from 'react-router-dom';
+import useInput from '../hooks/useInput';
+import axios from 'axios';
 
 const Tvdiscover = ({ element }) => {
   const [searched, setSearched] = useState([]);
@@ -14,7 +14,7 @@ const Tvdiscover = ({ element }) => {
   const handleSearch = async (e) => {
     try {
       e.preventDefault();
-      let query = search.value.replace(" ", "%20");
+      let query = search.value.replace(' ', '%20');
       let searcheShow = await axios.get(
         `${baseUrl}/search/tv?api_key=${apiKey}&language=en-US&page=1&query=${query}&include_adult=false`
       );
