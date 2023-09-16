@@ -1,6 +1,6 @@
-const S = require("sequelize");
-const db = require("../config/db/index");
-const bc = require("bcrypt");
+import S from 'sequelize';
+import db from '../config/db/index.js';
+import bc from 'bcrypt';
 
 class Users extends S.Model {
   //el salt es un string
@@ -18,23 +18,32 @@ class Users extends S.Model {
 Users.init(
   {
     user_name: { type: S.STRING, require: true, unique: true },
-    email: { type: S.STRING, require: true, validate: { isEmail: true } },
+    email: {
+      type: S.STRING,
+      require: true,
+      validate: { isEmail: true },
+      unique: true,
+    },
     password: { type: S.STRING, require: true },
     salt: { type: S.STRING },
   },
   {
     sequelize: db,
-    modelName: "user",
+    modelName: 'user',
   }
 );
 
-Users.addHook("beforeCreate", (user) => {
-  const salt = bc.genSaltSync();
-  user.salt = salt;
-  return user
-    .createHash(user.password, user.salt)
-    .then((result) => (user.password = result))
-    .catch((err) => console.log(err));
+//Encripting password
+Users.addHook('beforeCreate', async (user) => {
+  try {
+    const salt = bc.genSaltSync();
+    user.salt = salt;
+    const hashedPassword = await user.createHash(user.password, user.salt);
+    user.password = hashedPassword;
+    return user;
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-module.exports = Users;
+export default Users;

@@ -1,12 +1,19 @@
-import React from "react";
-import useInput from "../hooks/useInput";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setUser } from "../state/user";
-import { FailedLogin } from "../commons/alerts";
+//Dependencies
+import React from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+//Hooks
+import useInput from '../hooks/useInput';
+//Config
+import apiConfig from '../apiConfig';
+//Redux States
+import { setUser } from '../state/user';
+//Commons
+import { FailedLogin } from '../commons/alerts';
 
 const Login = () => {
+  const { projectBaseUrl } = apiConfig;
   const password = useInput();
   const user_name = useInput();
   const navigate = useNavigate();
@@ -19,10 +26,16 @@ const Login = () => {
         user_name: user_name.value,
         password: password.value,
       };
-      let logedUser = await axios.post("/api/users/login", createdUser);
+      let logedUser = await axios.post(
+        `${projectBaseUrl}/users/login`,
+        createdUser,
+        {
+          withCredentials: true,
+        }
+      );
       if (logedUser.data.email) {
         dispatch(setUser(logedUser.data));
-        navigate("/Movies");
+        navigate('/Movies');
       } else {
         FailedLogin();
       }
