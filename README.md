@@ -50,7 +50,7 @@ durante este proyecto aprendi a conectarme a una api externa como lo es la de Th
 - Crear Archivo .env En La Raiz Del Proyecto Y Llenar Sus Datos Siguiendo El .env.example
 - Ejecutar El Comando createdb <DB_NAME_DEL_.ENV> En Su Terminal
 - Ubicarse En La Carpeta Del Proyecto Con La Terminal
-- Ejecutar npm run client Para Tener El Front Disponible
+- Ejecutar npm run dev Para Tener El Front Disponible
 - Ejecutar npm run server Para Tener El Servidor Disponible
 
 
